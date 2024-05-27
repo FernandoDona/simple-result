@@ -5,7 +5,7 @@ public readonly record struct Created;
 public readonly record struct Deleted;
 public readonly record struct Updated;
 
-public static class Results 
+public static class EmptyResults
 {
     public static Success Success => default;
     public static Created Created => default;
