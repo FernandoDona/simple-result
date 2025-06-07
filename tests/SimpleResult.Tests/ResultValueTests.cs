@@ -1,6 +1,6 @@
 namespace SimpleResult.Tests;
 
-public class ResultTests
+public class ResultValueTests
 {
     [Fact]
     public void Create_SuccessResult()
@@ -9,11 +9,26 @@ public class ResultTests
         var value = "value";
 
         // Act
-        Result result = Result.Success();
+        Result<string> result = value;
 
         // Assert
         Assert.True(result.IsSuccess);
         Assert.False(result.IsFailure);
+        Assert.Equal(value, result.Value);
+    }
+
+    [Fact]
+    public void Create_SuccessResult_NullValue()
+    {
+        // Arrange
+        string? value = null;
+
+        // Act
+        Action act = () => { Result<string> result = value!; };
+
+        // Assert
+        var exception = Assert.Throws<ArgumentNullException>(act);
+        Assert.Equal("A successful result cannot be null (Parameter 'value')", exception.Message);
     }
 
     [Fact]
@@ -23,7 +38,7 @@ public class ResultTests
         var error = new Error(999, "Test.Error", "Test error message", ErrorType.InternalServerError);
 
         // Act
-        Result result = error;
+        Result<string> result = error;
 
         // Assert
         Assert.False(result.IsSuccess);
@@ -44,7 +59,7 @@ public class ResultTests
         };
 
         // Act
-        Result result = errors;
+        Result<string> result = errors;
 
         // Assert
         Assert.False(result.IsSuccess);
@@ -60,7 +75,7 @@ public class ResultTests
         List<Error>? errors = null;
 
         // Act
-        Action act = () => { Result result = errors!; };
+        Action act = () => { Result<string> result = errors!; };
 
         // Assert
         var exception = Assert.Throws<ArgumentNullException>(act);
@@ -74,7 +89,7 @@ public class ResultTests
         List<Error> errors = new List<Error>();
 
         // Act
-        Action act = () => { Result result = errors; };
+        Action act = () => { Result<string> result = errors; };
 
         // Assert
         var exception = Assert.Throws<ArgumentNullException>(act);
@@ -85,14 +100,16 @@ public class ResultTests
     public void Match_Success()
     {
         // Arrange
-        Result result = Result.Success();
+        var value = "value";
+        Result<string> result = value;
 
         // Act
         var response = result.Match(
-            onSuccess: () => true,
-            onError: _ => false);
-        
-        Assert.True(response);
+            onSuccess: v => v,
+            onError: _ => "error");
+
+        // Assert
+        Assert.Equal(value, response);
     }
 
     [Fact]
@@ -100,11 +117,11 @@ public class ResultTests
     {
         // Arrange
         var error = new Error(999, "Test.Error", "Test error message", ErrorType.InternalServerError);
-        Result result = error;
+        Result<string> result = error;
 
         // Act
         var response = result.Match(
-            onSuccess: () => "test",
+            onSuccess: v => v,
             onError: _ => "error");
 
         // Assert

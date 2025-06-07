@@ -1,8 +1,10 @@
 ﻿namespace SimpleResult;
 
-public readonly record struct Result
+public readonly record struct Result<TValue>
 {
+    private readonly TValue? _value = default;
     private readonly List<Error>? _errors = null;
+    public TValue? Value => _value;
     public bool IsSuccess { get; }
     public bool IsFailure => !IsSuccess;
     public Error FirstError
@@ -30,7 +32,16 @@ public readonly record struct Result
             return _errors;
         }
     }
+    private Result(TValue value)
+    {
+        if (value is null)
+        {
+            throw new ArgumentNullException(nameof(value), "A successful result cannot be null");
+        }
 
+        _value = value;
+        IsSuccess = true;
+    }
     private Result(List<Error> errors)
     {
         if (errors is null || errors.Count == 0)
@@ -41,27 +52,21 @@ public readonly record struct Result
         _errors = errors;
         IsSuccess = false;
     }
-
     private Result(Error error)
     {
         _errors = new List<Error> { error };
         IsSuccess = false;
     }
 
-    private Result(bool success)
-    {
-        IsSuccess = success;
-    }
-
-    public static implicit operator Result(Error error) => new(error);
-    public static implicit operator Result(List<Error> errors) => new(errors);
-    public static Result Success() => new(true);
-
-    public TResponse Match<TResponse>(Func<TResponse> onSuccess, Func<List<Error>, TResponse> onError)
+    public TResponse Match<TResponse>(Func<TValue, TResponse> onSuccess, Func<List<Error>, TResponse> onError)
     {
         if (!IsSuccess)
             return onError(_errors!);
 
-        return onSuccess();
+        return onSuccess(_value!);
     }
+
+    public static implicit operator Result<TValue>(TValue value) => new Result<TValue>(value);
+    public static implicit operator Result<TValue>(Error error) => new Result<TValue>(error);
+    public static implicit operator Result<TValue>(List<Error> errors) => new Result<TValue>(errors);
 }
