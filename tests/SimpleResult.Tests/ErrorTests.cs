@@ -1,0 +1,95 @@
+﻿namespace SimpleResult.Tests;
+public class ErrorTests
+{
+    [Fact]
+    public void Create_CustomError()
+    {
+        var error = new Error("Order.InvalidState", "Order must be paid to be shipped", ErrorType.InvalidState);
+
+        Assert.Equal("Order.InvalidState", error.Code);
+        Assert.Equal("Order must be paid to be shipped", error.Message);
+        Assert.Equal(ErrorType.InvalidState, error.Type);
+    }
+
+    [Fact]
+    public void Create_DefaultInvalidDataError()
+    {
+        var error = Error.InvalidData();
+
+        Assert.Equal(nameof(ErrorType.InvalidData), error.Code);
+        Assert.Equal("Invalid data provided", error.Message);
+        Assert.Equal(ErrorType.InvalidData, error.Type);
+    }
+    [Fact]
+    public void Create_DefaultUnauthorizedError()
+    {
+        var error = Error.Unauthorized();
+
+        Assert.Equal(nameof(ErrorType.Unauthorized), error.Code);
+        Assert.Equal("Authentication required", error.Message);
+        Assert.Equal(ErrorType.Unauthorized, error.Type);
+    }
+    [Fact]
+    public void Create_DefaultForbiddenError()
+    {
+        var error = Error.Forbidden();
+
+        Assert.Equal(nameof(ErrorType.Forbidden), error.Code);
+        Assert.Equal("Access denied", error.Message);
+        Assert.Equal(ErrorType.Forbidden, error.Type);
+    }
+    [Fact]
+    public void Create_DefaultNotFoundError()
+    {
+        var error = Error.NotFound();
+
+        Assert.Equal(nameof(ErrorType.NotFound), error.Code);
+        Assert.Equal("Resource not found", error.Message);
+        Assert.Equal(ErrorType.NotFound, error.Type);
+    }
+    [Fact]
+    public void Create_DefaultInvalidStateError()
+    {
+        var error = Error.InvalidState();
+
+        Assert.Equal(nameof(ErrorType.InvalidState), error.Code);
+        Assert.Equal("Invalid state for operation", error.Message);
+        Assert.Equal(ErrorType.InvalidState, error.Type);
+    }
+    [Fact]
+    public void Create_DefaultRuleViolationError()
+    {
+        var error = Error.RuleViolation();
+
+        Assert.Equal(nameof(ErrorType.RuleViolation), error.Code);
+        Assert.Equal("Business rules violation", error.Message);
+        Assert.Equal(ErrorType.RuleViolation, error.Type);
+    }
+    [Fact]
+    public void Create_DefaultUnprocessableError()
+    {
+        var error = Error.Unprocessable();
+
+        Assert.Equal(nameof(ErrorType.Unprocessable), error.Code);
+        Assert.Equal("Unprocessable action", error.Message);
+        Assert.Equal(ErrorType.Unprocessable, error.Type);
+    }
+    [Fact]
+    public void Create_DefaultConflictError()
+    {
+        var error = Error.Conflict();
+
+        Assert.Equal(nameof(ErrorType.Conflict), error.Code);
+        Assert.Equal("Conflict detected", error.Message);
+        Assert.Equal(ErrorType.Conflict, error.Type);
+    }
+    [Fact]
+    public void Create_DefaultUnexpectedError()
+    {
+        var error = Error.Unexpected();
+
+        Assert.Equal(nameof(ErrorType.Unexpected), error.Code);
+        Assert.Equal("An unexpected error occured", error.Message);
+        Assert.Equal(ErrorType.Unexpected, error.Type);
+    }
+}
