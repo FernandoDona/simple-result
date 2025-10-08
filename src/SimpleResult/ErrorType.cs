@@ -2,11 +2,13 @@ namespace SimpleResult;
 
 public enum ErrorType
 {
-    Validation = 400,
-    Unauthorized = 401,
-    Forbidden = 403,
-    NotFound = 404,
-    Conflict = 409,
-    InternalServerError = 500,
-    NotImplemented = 501,
+    InvalidData,
+    Unauthorized,
+    Forbidden,
+    NotFound,
+    Conflict,
+    Unprocessable,
+    InvalidState,
+    RuleViolation,
+    Unexpected
 }
