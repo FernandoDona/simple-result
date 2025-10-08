@@ -1,44 +1,38 @@
 namespace SimpleResult;
 
 public readonly record struct Error(
-    int Id,
     string Code,
     string Message,
     ErrorType Type)
 {
-    public static Error Validation(
-        int id = (int)ErrorType.Validation,
-        string code = nameof(ErrorType.Validation),
-        string message = "The input is invalid",
-        ErrorType errorType = ErrorType.Validation) => new Error(id, code, message, errorType);
+    public bool Equals(Error other) => Code == other.Code && Type == other.Type;
+    public override int GetHashCode() => HashCode.Combine(Code, Type);
+
+    public static Error InvalidData(
+        string code = nameof(ErrorType.InvalidData),
+        string message = "Invalid data provided") => new(code, message, ErrorType.InvalidData);
     public static Error Unauthorized(
-        int id = (int)ErrorType.Unauthorized,
         string code = nameof(ErrorType.Unauthorized),
-        string message = "You are not authorized to access this resource",
-        ErrorType errorType = ErrorType.Unauthorized) => new Error(id, code, message, errorType);
+        string message = "Authentication required") => new(code, message, ErrorType.Unauthorized);
     public static Error Forbidden(
-        int id = (int)ErrorType.Forbidden,
         string code = nameof(ErrorType.Forbidden),
-        string message = "You are not allowed to access this resource",
-        ErrorType errorType = ErrorType.Forbidden) => new Error(id, code, message, errorType);
+        string message = "Access denied") => new(code, message, ErrorType.Forbidden);
     public static Error NotFound(
-        int id = (int)ErrorType.NotFound,
         string code = nameof(ErrorType.NotFound),
-        string message = "The requested resource was not found",
-        ErrorType errorType = ErrorType.NotFound) => new Error(id, code, message, errorType);
+        string message = "Resource not found") => new(code, message, ErrorType.NotFound);
+    public static Error InvalidState(
+        string code = nameof(ErrorType.InvalidState),
+        string message = "Invalid state for operation") => new(code, message, ErrorType.InvalidState);
+    public static Error RuleViolation(
+        string code = nameof(ErrorType.RuleViolation),
+        string message = "Business rules violation") => new(code, message, ErrorType.RuleViolation);
+    public static Error Unprocessable(
+        string code = nameof(ErrorType.Unprocessable),
+        string message = "Unprocessable action") => new(code, message, ErrorType.Unprocessable);
     public static Error Conflict(
-        int id = (int)ErrorType.Conflict,
         string code = nameof(ErrorType.Conflict),
-        string message = "A conflit happened",
-        ErrorType errorType = ErrorType.Conflict) => new Error(id, code, message, errorType);
-    public static Error InternalServerError(
-        int id = (int)ErrorType.InternalServerError,
-        string code = nameof(ErrorType.InternalServerError),
-        string message = "An unexpected error occurred",
-        ErrorType errorType = ErrorType.InternalServerError) => new Error(id, code, message, errorType);
-    public static Error NotImplemented(
-        int id = (int)ErrorType.NotImplemented,
-        string code = nameof(ErrorType.NotImplemented),
-        string message = "This feature is not implemented",
-        ErrorType errorType = ErrorType.NotImplemented) => new Error(id, code, message, errorType);
+        string message = "Conflict detected") => new(code, message, ErrorType.Conflict);
+    public static Error Unexpected(
+        string code = nameof(ErrorType.Unexpected),
+        string message = "An unexpected error occured") => new(code, message, ErrorType.Unexpected);
 }
