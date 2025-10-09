@@ -14,7 +14,7 @@ public class ResultValueInstanciationSuccess
     }
 
     [Benchmark]
-    public FluentResults.Result<int> Instanciate_FluentResult_WithValue()
+    public FluentResults.Result<int> Instantiate_FluentResult_WithValue()
     {
         FluentResults.Result<int> result = FluentResults.Result.Ok(42);
 
@@ -22,7 +22,7 @@ public class ResultValueInstanciationSuccess
     }
 
     [Benchmark]
-    public Ardalis.Result.Result<int> Instanciate_ArdalisResult_WithValue()
+    public Ardalis.Result.Result<int> Instantiate_ArdalisResult_WithValue()
     {
         Ardalis.Result.Result<int> result = Ardalis.Result.Result.Success(42);
 

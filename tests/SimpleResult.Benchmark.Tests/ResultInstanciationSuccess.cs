@@ -14,7 +14,7 @@ public class ResultInstanciationSuccess
     }
 
     [Benchmark]
-    public FluentResults.Result Instanciate_FluentResult()
+    public FluentResults.Result Instantiate_FluentResult()
     {
         FluentResults.Result result = FluentResults.Result.Ok();
 
@@ -22,7 +22,7 @@ public class ResultInstanciationSuccess
     }
 
     [Benchmark]
-    public Ardalis.Result.Result Instanciate_ArdalisResult()
+    public Ardalis.Result.Result Instantiate_ArdalisResult()
     {
         Ardalis.Result.Result result = Ardalis.Result.Result.Success();
 

@@ -20,7 +20,7 @@ public class ResultValueInstanciationFailure
     }
 
     [Benchmark]
-    public FluentResults.Result<int> Instanciate_FluentResultGeneric_WithErrors()
+    public FluentResults.Result<int> Instantiate_FluentResultGeneric_WithErrors()
     {
         var errors = new List<FluentResults.IError>()
         {
@@ -34,7 +34,7 @@ public class ResultValueInstanciationFailure
     }
 
     [Benchmark]
-    public Ardalis.Result.Result<int> Instanciate_ArdalisResultGeneric_WithErrors()
+    public Ardalis.Result.Result<int> Instantiate_ArdalisResultGeneric_WithErrors()
     {
         var errors = new List<Ardalis.Result.ValidationError>()
         {
