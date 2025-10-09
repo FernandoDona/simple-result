@@ -1,7 +1,18 @@
 ﻿namespace SimpleResult.Tests;
 public class ErrorTests
 {
-    [Fact]
+    [Fact(DisplayName = nameof(Equals_WhenOnlyMessageIsDifferent))]
+    [Trait("Error", "Equals")]
+    public void Equals_WhenOnlyMessageIsDifferent()
+    {
+        var error1 = new Error("Teste.Code", "Message 1 teste", ErrorType.InvalidData);
+        var error2 = new Error("Teste.Code", "Message 2 teste diff", ErrorType.InvalidData);
+
+        Assert.Equal(error1, error2);
+    }
+
+    [Fact(DisplayName = nameof(Create_CustomError))]
+    [Trait("Error", "Create - Custom")]
     public void Create_CustomError()
     {
         var error = new Error("Order.InvalidState", "Order must be paid to be shipped", ErrorType.InvalidState);
@@ -11,7 +22,19 @@ public class ErrorTests
         Assert.Equal(ErrorType.InvalidState, error.Type);
     }
 
-    [Fact]
+    [Fact(DisplayName = nameof(Create_CustomErrorFromDefault))]
+    [Trait("Error", "Create - Custom")]
+    public void Create_CustomErrorFromDefault()
+    {
+        var error = Error.InvalidState("Order.InvalidState", "Order must be paid to be shipped");
+
+        Assert.Equal("Order.InvalidState", error.Code);
+        Assert.Equal("Order must be paid to be shipped", error.Message);
+        Assert.Equal(ErrorType.InvalidState, error.Type);
+    }
+
+    [Fact(DisplayName = nameof(Create_DefaultInvalidDataError))]
+    [Trait("Error", "Create - Default")]
     public void Create_DefaultInvalidDataError()
     {
         var error = Error.InvalidData();
