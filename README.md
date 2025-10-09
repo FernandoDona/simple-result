@@ -5,7 +5,7 @@ It was designed to be straightforward and focused, including only the essential 
 
 ---
 
-## 📑 Table of Contents
+## Table of Contents
 - [Overview](#overview)
 - [How to Use](#how-to-use)
   - [Result](#result-and-result)
@@ -38,6 +38,7 @@ In other words, if your function returns a `Result<T>`, you can simply return th
 You also need to specify an `ErrorType`, which is useful when you want to classify errors (e.g., by HTTP status).
 
 ### Error
+
 `Error` is an immutable `record struct` that contains a **code**, a **message**, and a **type**.  
 It is recommended to group and define static errors to clearly document all expected errors.  
 See the [example below](#documenting-errors).
