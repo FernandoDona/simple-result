@@ -1,0 +1,35 @@
+name: .NET CI - Build and tests
+on:
+  push: 
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  build-and-tests:
+    runs-on: ubuntu-lastest
+
+    steps:
+    - name: Code Checkout
+      uses: actions/checkout@v4
+    
+    - name: Nuget Packages Cache
+      uses: actions/cache@v4
+      with:  
+        path: ~/.nuget/Packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj', '**/packages-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
+
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.x'
+    
+    - name: Restore Dependencies
+      run: dotnet restore
+    
+    - name: Build
+      run: dotnet build --no-restore --configuration Release
+
+    - name: Run tests
+      run: dotnet test --no-build --verbosity normal
