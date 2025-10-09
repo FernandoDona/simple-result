@@ -43,7 +43,9 @@ public class ErrorTests
         Assert.Equal("Invalid data provided", error.Message);
         Assert.Equal(ErrorType.InvalidData, error.Type);
     }
-    [Fact]
+    
+    [Fact(DisplayName = nameof(Create_DefaultUnauthorizedError))]
+    [Trait("Error", "Create - Default")]
     public void Create_DefaultUnauthorizedError()
     {
         var error = Error.Unauthorized();
@@ -52,7 +54,9 @@ public class ErrorTests
         Assert.Equal("Authentication required", error.Message);
         Assert.Equal(ErrorType.Unauthorized, error.Type);
     }
-    [Fact]
+    
+    [Fact(DisplayName = nameof(Create_DefaultForbiddenError))]
+    [Trait("Error", "Create - Default")]
     public void Create_DefaultForbiddenError()
     {
         var error = Error.Forbidden();
@@ -61,7 +65,9 @@ public class ErrorTests
         Assert.Equal("Access denied", error.Message);
         Assert.Equal(ErrorType.Forbidden, error.Type);
     }
-    [Fact]
+    
+    [Fact(DisplayName = nameof(Create_DefaultNotFoundError))]
+    [Trait("Error", "Create - Default")]
     public void Create_DefaultNotFoundError()
     {
         var error = Error.NotFound();
@@ -70,7 +76,9 @@ public class ErrorTests
         Assert.Equal("Resource not found", error.Message);
         Assert.Equal(ErrorType.NotFound, error.Type);
     }
-    [Fact]
+    
+    [Fact(DisplayName = nameof(Create_DefaultInvalidStateError))]
+    [Trait("Error", "Create - Default")]
     public void Create_DefaultInvalidStateError()
     {
         var error = Error.InvalidState();
@@ -79,7 +87,9 @@ public class ErrorTests
         Assert.Equal("Invalid state for operation", error.Message);
         Assert.Equal(ErrorType.InvalidState, error.Type);
     }
-    [Fact]
+    
+    [Fact(DisplayName = nameof(Create_DefaultInvalidDataError))]
+    [Trait("Error", "Create - Default")]
     public void Create_DefaultRuleViolationError()
     {
         var error = Error.RuleViolation();
@@ -88,7 +98,9 @@ public class ErrorTests
         Assert.Equal("Business rules violation", error.Message);
         Assert.Equal(ErrorType.RuleViolation, error.Type);
     }
-    [Fact]
+    
+    [Fact(DisplayName = nameof(Create_DefaultUnprocessableError))]
+    [Trait("Error", "Create - Default")]
     public void Create_DefaultUnprocessableError()
     {
         var error = Error.Unprocessable();
@@ -97,7 +109,9 @@ public class ErrorTests
         Assert.Equal("Unprocessable action", error.Message);
         Assert.Equal(ErrorType.Unprocessable, error.Type);
     }
-    [Fact]
+    
+    [Fact(DisplayName = nameof(Create_DefaultConflictError))]
+    [Trait("Error", "Create - Default")]
     public void Create_DefaultConflictError()
     {
         var error = Error.Conflict();
@@ -106,7 +120,9 @@ public class ErrorTests
         Assert.Equal("Conflict detected", error.Message);
         Assert.Equal(ErrorType.Conflict, error.Type);
     }
-    [Fact]
+    
+    [Fact(DisplayName = nameof(Create_DefaultUnexpectedError))]
+    [Trait("Error", "Create - Default")]
     public void Create_DefaultUnexpectedError()
     {
         var error = Error.Unexpected();

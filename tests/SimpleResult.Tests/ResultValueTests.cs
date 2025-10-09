@@ -2,7 +2,8 @@ namespace SimpleResult.Tests;
 
 public class ResultValueTests
 {
-    [Fact]
+    [Fact(DisplayName = nameof(Create_SuccessResult))]
+    [Trait("Result<T>", "Create")]
     public void Create_SuccessResult()
     {
         var value = "value";
@@ -14,7 +15,8 @@ public class ResultValueTests
         Assert.Equal(value, result.Value);
     }
 
-    [Fact]
+    [Fact(DisplayName = nameof(Create_SuccessResult_NullValue))]
+    [Trait("Result<T>", "Create")]
     public void Create_SuccessResult_NullValue()
     {
         string? value = null;
@@ -25,7 +27,8 @@ public class ResultValueTests
         Assert.Equal("A successful Result<T> cannot be null. (Parameter 'value')", exception.Message);
     }
 
-    [Fact]
+    [Fact(DisplayName = nameof(Create_FailureResult))]
+    [Trait("Result<T>", "Create")]
     public void Create_FailureResult()
     {
         var error = new Error("Test.Error", "Test error message", ErrorType.Unexpected);
@@ -38,7 +41,8 @@ public class ResultValueTests
         Assert.Equal(error, result.Errors[0]);
     }
 
-    [Fact]
+    [Fact(DisplayName = nameof(Create_FailureResult_ListErrors))]
+    [Trait("Result<T>", "Create")]
     public void Create_FailureResult_ListErrors()
     {
         var errors = new List<Error>
@@ -57,7 +61,8 @@ public class ResultValueTests
         }
     }
 
-    [Fact]
+    [Fact(DisplayName = nameof(Create_FailureResult_NullErrors))]
+    [Trait("Result<T>", "Create")]
     public void Create_FailureResult_NullErrors()
     {
         List<Error>? errors = null;
@@ -68,7 +73,8 @@ public class ResultValueTests
         Assert.Equal("An error result must have at least one error (Parameter 'errors')", exception.Message);
     }
 
-    [Fact]
+    [Fact(DisplayName = nameof(Create_FailureResult_EmptyErrors))]
+    [Trait("Result<T>", "Create")]
     public void Create_FailureResult_EmptyErrors()
     {
         List<Error> errors = new List<Error>();
@@ -79,7 +85,8 @@ public class ResultValueTests
         Assert.Equal("An error result must have at least one error (Parameter 'errors')", exception.Message);
     }
 
-    [Fact]
+    [Fact(DisplayName = nameof(Match_Success))]
+    [Trait("Result<T>", "Match")]
     public void Match_Success()
     {
         var value = "value";
@@ -92,7 +99,8 @@ public class ResultValueTests
         Assert.Equal(value, response);
     }
 
-    [Fact]
+    [Fact(DisplayName = nameof(Match_Failure))]
+    [Trait("Result<T>", "Match")]
     public void Match_Failure()
     {
         var error = new Error("Test.Error", "Test error message", ErrorType.Forbidden);
