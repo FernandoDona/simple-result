@@ -1,9 +1,38 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+	<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+	
+	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	<Version>1.0.0</Version>
+	<Authors>Fernando Doná</Authors>
+	<Company>Fernando Doná</Company>
+	<PackageId>FD.SimpleResult</PackageId>
+	<Description>SimpleResult is one of the simplest and fastest libraries implementing the Result Pattern.</Description>
+	<RepositoryUrl>https://github.com/FernandoDona/simple-result</RepositoryUrl>
+	<Title>SimpleResult</Title>
+	<PackageLicenseFile>LICENSE</PackageLicenseFile>
+	<PackageProjectUrl>https://github.com/FernandoDona/simple-result</PackageProjectUrl>
+	<PackageReadmeFile>README.md</PackageReadmeFile>
+	<PackageIcon>simple-result-icon-128x128.png</PackageIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\..\simple-result-icon-128x128.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>
