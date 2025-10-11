@@ -1,35 +1,41 @@
-name: .NET CI - Build and tests
+name: .NET CI - Build and Tests
+
 on:
   push: 
-    branches: [ main ]
+    branches: [ main, develop, feature/* ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, develop ]
+
 jobs:
   build-and-tests:
-    runs-on: ubuntu-lastest
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        dotnet: [ '8.x', '9.x' ]
 
     steps:
-    - name: Code Checkout
-      uses: actions/checkout@v4
+      - name: Code Checkout
+        uses: actions/checkout@v4
     
-    - name: Nuget Packages Cache
-      uses: actions/cache@v4
-      with:  
-        path: ~/.nuget/Packages
-        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj', '**/packages-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-nuget-
+      - name: Nuget Packages Cache
+        uses: actions/cache@v4
+        with:  
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj', '**/packages-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+    
+      - name: Setup .NET SDK ${{ matrix.dotnet }}
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ matrix.dotnet }}
+    
+      - name: Restore Dependencies
+        run: dotnet restore
+    
+      - name: Build
+        run: dotnet build --no-restore --configuration Release
 
-    - name: Setup .NET SDK
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: '8.x'
-    
-    - name: Restore Dependencies
-      run: dotnet restore
-    
-    - name: Build
-      run: dotnet build --no-restore --configuration Release
-
-    - name: Run tests
-      run: dotnet test --no-build --verbosity normal
+      - name: Run Tests
+        run: dotnet test --no-build --verbosity normal

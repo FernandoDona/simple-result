@@ -1,0 +1,56 @@
+name: .NET CD - Pack and Deploy
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  pack-and-deploy:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        dotnet: [ '8.x', '9.x' ]
+
+    steps:
+      - name: Code Checkout
+        uses: actions/checkout@v4
+
+      - name: Fail if tag is not on main branch
+        run: |
+          TAG_COMMIT=$(git rev-list -n 1 $GITHUB_REF_NAME)
+          BRANCH=$(git branch -r --contains $TAG_COMMIT | grep 'origin/main' || true)
+          if [ -z "$BRANCH" ]; then
+            echo "❌ Tag $GITHUB_REF_NAME is not on the main branch. Failing pipeline."
+            exit 1
+          else
+            echo "✅ Tag $GITHUB_REF_NAME is on main branch. Continuing..."
+          fi
+
+      - name: Extract version from tag
+        id: get_version
+        run: echo "version=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
+
+      - name: Set version in csproj
+        run: |
+          VERSION=${{ steps.get_version.outputs.version }}
+          echo "Using version $VERSION"
+          sed -i "s|<Version>.*</Version>|<Version>${VERSION}</Version>|" MyProject/MyProject.csproj
+
+      - name: Setup .NET SDK ${{ matrix.dotnet }}
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ matrix.dotnet }}
+      
+      - name: Restore Dependencies
+        run: dotnet restore
+      
+      - name: Build
+        run: dotnet build --no-restore --configuration Release
+      
+      - name: Pack NuGet Package
+        run: dotnet pack --no-build --configuration Release -o ./artifacts
+
+      - name: Publish to NuGet.org
+        run: dotnet nuget push "./artifacts/*.nupkg" --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
