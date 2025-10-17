@@ -3,6 +3,11 @@
 SimpleResult is one of the simplest and fastest libraries implementing the Result Pattern.  
 It was designed to be straightforward and focused, including only the essential features.
 
+[![NuGet Version](https://img.shields.io/nuget/v/FFD.SimpleResult.svg?style=flat-square)](https://www.nuget.org/packages/FFD.SimpleResult)
+[![Testes](https://github.com/FernandoDona/simple-result/actions/workflows/dotnet-ci.yml/badge.svg)](https://github.com/FernandoDona/simple-result/actions/workflows/dotnet-ci.yml)
+```bash
+dotnet add package FFD.SimpleResult
+```
 ---
 
 ## Table of Contents
